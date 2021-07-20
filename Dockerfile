@@ -10,4 +10,4 @@ RUN make build
 FROM alpine:3.14
 WORKDIR /app
 COPY --from=builder /app/bin/slow-http ./
-CMD slow-http
+CMD /app/slow-http
