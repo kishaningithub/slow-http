@@ -10,9 +10,16 @@ import (
 )
 
 func main() {
-	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr, TimeFormat: time.RFC3339Nano, NoColor: true, FormatLevel: func(level interface{}) string {
-		return fmt.Sprintf("%v", level)
-	}})
+	writer := zerolog.ConsoleWriter{
+		Out:        os.Stderr,
+		TimeFormat: time.RFC3339Nano,
+		NoColor:    true,
+		FormatLevel: func(level interface{}) string {
+			return fmt.Sprintf("%v", level)
+		},
+	}
+	log.Logger = log.Output(writer)
+
 	gin.SetMode(gin.ReleaseMode)
 	r := gin.New()
 	r.Use(Logger(), gin.Recovery())
@@ -47,7 +54,7 @@ func Logger() gin.HandlerFunc {
 			path += "?" + query
 		}
 
-		log.Info().
+		log.Info().Timestamp().
 			Str("clientIp", c.ClientIP()).
 			Str("path", path).
 			Str("method", c.Request.Method).
