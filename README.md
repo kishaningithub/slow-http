@@ -5,7 +5,7 @@ Simulate slow http responses
 
 ### Using docker
 
-- Run command `docker run -p 8080:8080 kishanb/slow-http:1.0.1`
+- Run command `docker run --env DELAY_RESPONSE=20s -p 8080:8080 kishanb/slow-http:1.0.1`
 - Open `http://localhost:8080`  
 
 ### Using docker compose
